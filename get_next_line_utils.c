@@ -6,7 +6,7 @@
 /*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 01:12:52 by fda-estr          #+#    #+#             */
-/*   Updated: 2023/06/27 19:16:05 by fda-estr         ###   ########.fr       */
+/*   Updated: 2023/06/27 21:52:55 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ char	*stringbuilder(char *content, char *save, int toread, int fd)
 		temp = save;
 		if (nlcheck(save) == 1)
 		{
-			while (*save != '\n')
+			while (*save != '\n' && *save)
 				save++;
 			save++;
 		}

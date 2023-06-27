@@ -6,7 +6,7 @@
 /*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 01:12:55 by fda-estr          #+#    #+#             */
-/*   Updated: 2023/06/27 19:33:05 by fda-estr         ###   ########.fr       */
+/*   Updated: 2023/06/27 21:47:45 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,34 +26,24 @@ char	*get_next_line(int fd)
 	toread = read(fd, content, BUFFER_SIZE);
 	if (toread <= 0)
 		return (NULL);
-	save = stringbuilder(content, save, toread, fd);
+	if (*content)
+		save = stringbuilder(content, save, toread, fd);
 	return (spliter(save));
 }
 
-int	main()
-{
-	int	fd;
-	char *str;
-	fd = open("test.txt", O_RDONLY);
-	if (fd == -1)
-		printf("ERRO\n");
-	
-	str = get_next_line(fd);
-	if (str == NULL)
-		printf("NULL\n");
-	else
-		printf("%s", str);
-	free(str);
-	str = get_next_line(fd);
-	if (str == NULL)
-		printf("NULL\n");
-	else
-		printf("%s", str);
-	free(str);
-	str = get_next_line(fd);
-	if (str == NULL)
-		printf("NULL\n");
-	else
-		printf("%s", str);
-	free(str);
-}
+// int	main()
+// {
+// 	int	fd;
+// 	char *str;
+// 	fd = open("test.txt", O_RDONLY);
+// 	if (fd == -1)
+// 		printf("ERRO\n");
+// 	while (1)
+// 	{
+// 		str =  get_next_line(fd);
+// 		if (!str)
+// 			break ;
+// 		printf("%s", str);
+// 		free(str);
+// 	}
+// }
