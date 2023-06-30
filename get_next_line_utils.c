@@ -6,7 +6,7 @@
 /*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 01:12:52 by fda-estr          #+#    #+#             */
-/*   Updated: 2023/06/28 21:15:33 by fda-estr         ###   ########.fr       */
+/*   Updated: 2023/06/30 19:50:39 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 int	nlcheck(char *str)
 {
+	if (!str)
+	 	return (0);
 	while (*str)
 	{
 		if (*str == '\n')
@@ -64,7 +66,6 @@ char	*spliter(char *content)
 		prod[i] = content[i];
 		i++;
 	}
-	// printf("\n=========Spliter check===========\n");
 	if (endcheck(content) == 1)
 		free (content);
 	return (prod);
@@ -75,16 +76,11 @@ char	*ft_strjoin(char *dest, char *src, char *tofree, int toread)
 	char	*prod;
 	int		i;
 	int		j;
-	int		size;
 
-	size = 0;
 	i = 0;
-	while (dest && dest[size])
-		size++;
-	while (src && src[i])
+	while (dest && dest[i])
 		i++;
-	size += i;
-	prod = malloc(size + 1);
+	prod = malloc(i + toread + 1);
 	if (!prod)
 		return (NULL);
 	i = -1;
@@ -94,29 +90,31 @@ char	*ft_strjoin(char *dest, char *src, char *tofree, int toread)
 	while (src && src[++j] && j < toread)
 		prod[i + j] = src[j];
 	prod[i + j] = 0;
-		// printf("\n=========check===========\n");
 		(void) tofree;
 	if (tofree)
 		free (tofree);
 	return (prod);
 }
 
+
 char	*stringbuilder(char *content, char *save, int toread, int fd)
 {
 	char	*train;
 	char	*temp;
 
-	// printf("\n==Entrou no strbuilder==\n");
 	if (save)
 	{
 		temp = save;
-		if (nlcheck(save) == 1)
+		if (nlcheck(temp) == 1)
 		{
-			while (*save != '\n' && *save)
-				save++;
-			save++;
+			while (*temp != '\n' && *temp)
+				temp++;
+			if (*temp)
+				temp++;
 		}
-		train = ft_strjoin(save, content, temp, toread);
+		if (*temp == 0)
+			return (NULL);
+		train = ft_strjoin(temp, content, save, toread);
 	}
 	else
 		train = ft_strjoin(content, "", NULL, toread);
@@ -126,6 +124,5 @@ char	*stringbuilder(char *content, char *save, int toread, int fd)
 		if (toread > 0)
 			train = ft_strjoin(train, content, train, toread);
 	}
-	// printf("=train=\n%s=", train);
 	return (train);
 }
