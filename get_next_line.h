@@ -6,7 +6,7 @@
 /*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 01:12:58 by fda-estr          #+#    #+#             */
-/*   Updated: 2023/06/27 21:24:17 by fda-estr         ###   ########.fr       */
+/*   Updated: 2023/06/28 21:15:27 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,12 @@
 # include <stdlib.h>
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 5
+#  define BUFFER_SIZE 8
 # endif
 
 char	*get_next_line(int fd);
 int		nlcheck(char *str);
+int 	endcheck(char *str);
 char	*spliter(char *content);
 char	*ft_strjoin(char *dest, char *src, char *tofree, int toread);
 char	*stringbuilder(char *content, char *save, int todread, int fd);

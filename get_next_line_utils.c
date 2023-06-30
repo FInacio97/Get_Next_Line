@@ -6,7 +6,7 @@
 /*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 01:12:52 by fda-estr          #+#    #+#             */
-/*   Updated: 2023/06/27 21:52:55 by fda-estr         ###   ########.fr       */
+/*   Updated: 2023/06/28 21:15:33 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,24 @@ int	nlcheck(char *str)
 			return (1);
 		str++;
 	}
+	return (0);
+}
+
+int endcheck(char *str)
+{
+	int i;
+	int j;
+
+	i = 0;
+	j = 0;
+	while (str[i])
+		i++;
+	while (str[j] && str[j] != '\n')
+		j++;
+	if (str[j] == '\n')
+		j++;
+	if (i == j)
+		return (1);
 	return (0);
 }
 
@@ -46,7 +64,8 @@ char	*spliter(char *content)
 		prod[i] = content[i];
 		i++;
 	}
-	if (nlcheck(content) == 0)
+	// printf("\n=========Spliter check===========\n");
+	if (endcheck(content) == 1)
 		free (content);
 	return (prod);
 }
@@ -60,7 +79,7 @@ char	*ft_strjoin(char *dest, char *src, char *tofree, int toread)
 
 	size = 0;
 	i = 0;
-	while (dest[size])
+	while (dest && dest[size])
 		size++;
 	while (src && src[i])
 		i++;
@@ -70,11 +89,13 @@ char	*ft_strjoin(char *dest, char *src, char *tofree, int toread)
 		return (NULL);
 	i = -1;
 	j = -1;
-	while (dest[++i])
+	while (dest && dest[++i])
 		prod[i] = dest[i];
 	while (src && src[++j] && j < toread)
 		prod[i + j] = src[j];
 	prod[i + j] = 0;
+		// printf("\n=========check===========\n");
+		(void) tofree;
 	if (tofree)
 		free (tofree);
 	return (prod);
@@ -85,6 +106,7 @@ char	*stringbuilder(char *content, char *save, int toread, int fd)
 	char	*train;
 	char	*temp;
 
+	// printf("\n==Entrou no strbuilder==\n");
 	if (save)
 	{
 		temp = save;
@@ -104,5 +126,6 @@ char	*stringbuilder(char *content, char *save, int toread, int fd)
 		if (toread > 0)
 			train = ft_strjoin(train, content, train, toread);
 	}
+	// printf("=train=\n%s=", train);
 	return (train);
 }
