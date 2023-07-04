@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/12 01:12:55 by fda-estr          #+#    #+#             */
-/*   Updated: 2023/07/04 20:12:49 by fda-estr         ###   ########.fr       */
+/*   Created: 2023/07/04 19:30:22 by fda-estr          #+#    #+#             */
+/*   Updated: 2023/07/04 20:12:28 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*ft_cleaner(char *str)
 {
@@ -24,7 +24,7 @@ char	*ft_cleaner(char *str)
 
 char	*get_next_line(int fd)
 {
-	static char	content[BUFFER_SIZE + 1];
+	static char	content[FOPEN_MAX][BUFFER_SIZE + 1];
 	char		*save;
 	int			toread;
 
@@ -32,20 +32,20 @@ char	*get_next_line(int fd)
 	if (fd < 0 || !BUFFER_SIZE || fd > FOPEN_MAX)
 		return (NULL);
 	if (read(fd, 0, 0) < 0)
-		return (ft_cleaner(content));
-	if (!*content)
-		toread = read(fd, content, BUFFER_SIZE);
+		return (ft_cleaner(content[fd]));
+	if (!*content[fd])
+		toread = read(fd, content[fd], BUFFER_SIZE);
 	else
 	{
-		while (content[toread])
+		while (content[fd][toread])
 			toread++;
 	}
 	if (toread < 0)
 		return (NULL);
 	if (toread < BUFFER_SIZE && toread > 0)
-		content[toread] = 0;
-	if (!*content)
+		content[fd][toread] = 0;
+	if (!*content[fd])
 		return (NULL);
-	save = stringbuilder(content, toread, fd);
+	save = stringbuilder(content[fd], toread, fd);
 	return (splitter(save));
 }

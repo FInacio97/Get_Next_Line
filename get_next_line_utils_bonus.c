@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/12 01:12:52 by fda-estr          #+#    #+#             */
-/*   Updated: 2023/07/04 20:13:54 by fda-estr         ###   ########.fr       */
+/*   Created: 2023/07/04 19:38:26 by fda-estr          #+#    #+#             */
+/*   Updated: 2023/07/04 20:13:41 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 int	nlcheck(char *str)
 {
