@@ -6,7 +6,7 @@
 /*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 01:12:52 by fda-estr          #+#    #+#             */
-/*   Updated: 2023/06/30 19:50:39 by fda-estr         ###   ########.fr       */
+/*   Updated: 2023/07/04 18:58:50 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int	nlcheck(char *str)
 {
-	if (!str)
-	 	return (0);
+	if (!*str)
+		return (0);
 	while (*str)
 	{
 		if (*str == '\n')
@@ -25,10 +25,10 @@ int	nlcheck(char *str)
 	return (0);
 }
 
-int endcheck(char *str)
+int	endcheck(char *str)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = 0;
 	j = 0;
@@ -43,15 +43,15 @@ int endcheck(char *str)
 	return (0);
 }
 
-char	*spliter(char *content)
+char	*spliter(char *save, char *content)
 {
 	int		i;
 	char	*prod;
 
 	i = 0;
-	while (content[i] != '\n' && content[i])
+	while (save[i] != '\n' && save[i])
 		i++;
-	if (content[i] == '\n')
+	if (save[i] == '\n')
 	{
 		prod = malloc(i + 2);
 		prod[i] = '\n';
@@ -61,17 +61,19 @@ char	*spliter(char *content)
 		prod = malloc(i + 1);
 	prod[i] = '\0';
 	i = 0;
-	while (content[i] != '\n' && content[i])
+	while (save[i] != '\n' && save[i])
 	{
-		prod[i] = content[i];
+		prod[i] = save[i];
 		i++;
 	}
-	if (endcheck(content) == 1)
-		free (content);
+	if (endcheck(save) == 1)
+		content[0] = 0;
+	if (save)
+		free (save);
 	return (prod);
 }
 
-char	*ft_strjoin(char *dest, char *src, char *tofree, int toread)
+char	*ft_strjoin(char *dest, char *src, int toread)
 {
 	char	*prod;
 	int		i;
@@ -90,39 +92,57 @@ char	*ft_strjoin(char *dest, char *src, char *tofree, int toread)
 	while (src && src[++j] && j < toread)
 		prod[i + j] = src[j];
 	prod[i + j] = 0;
-		(void) tofree;
-	if (tofree)
-		free (tofree);
+	if (dest)
+		free (dest);
 	return (prod);
 }
 
+void	saver(char *content, char *save)
+{
+	int	i;
+	int	j;
 
-char	*stringbuilder(char *content, char *save, int toread, int fd)
+	i = 0;
+	while (save && save[i])
+		i++;
+	if (i == 1)
+	{
+		*content = 0;
+		return ;
+	}
+	i = 0;
+	while (save[i] && save[i] != '\n')
+		i++;
+	if (!save[i])
+	{
+		*content = 0;
+		return ;
+	}
+	i++;
+	j = -1;
+	while (save[++j + i])
+		content[j] = save [j + i];
+	content[j] = 0;
+}
+
+char	*stringbuilder(char *content, int toread, int fd)
 {
 	char	*train;
-	char	*temp;
+	int		i;
 
-	if (save)
-	{
-		temp = save;
-		if (nlcheck(temp) == 1)
-		{
-			while (*temp != '\n' && *temp)
-				temp++;
-			if (*temp)
-				temp++;
-		}
-		if (*temp == 0)
-			return (NULL);
-		train = ft_strjoin(temp, content, save, toread);
-	}
-	else
-		train = ft_strjoin(content, "", NULL, toread);
+	i = -1;
+	train = malloc(toread + 1);
+	if (train == 0)
+		return (NULL);
+	while (content[++i])
+		train[i] = content[i];
+	train[i] = 0;
 	while (toread > 0 && nlcheck(train) == 0)
 	{
 		toread = read(fd, content, BUFFER_SIZE);
 		if (toread > 0)
-			train = ft_strjoin(train, content, train, toread);
+			train = ft_strjoin(train, content, toread);
 	}
+	saver(content, train);
 	return (train);
 }

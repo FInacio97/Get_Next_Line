@@ -1,3 +1,6 @@
+o que falta:
+eliminar do content o que ja esta para ser devolvido 
+
 Planeamento GNL
 
 ============ Saltar até à linha que é suposto devolver ===================================================
